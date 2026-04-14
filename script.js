@@ -15,8 +15,8 @@ function getParam(name) {
 }
 
 // Draw a compass chart
-function drawCompass(canvasElement, points, highlight = null) {
-  new Chart(canvasElement.getContext('2d'), {
+function drawCompass(canvasElement, points, highlight = null, isGlobal = false) {
+  const chart = new Chart(canvasElement.getContext('2d'), {
     type: "scatter",
     data: {
       datasets: [
@@ -83,7 +83,22 @@ function drawCompass(canvasElement, points, highlight = null) {
         legend: { display: false },
         filler: {
           propagate: true
+        },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: function(context) {
+              const point = context.raw;
+              if (isGlobal && point.initials && point.timestamp) {
+                return `${point.initials} - ${point.timestamp}`;
+              }
+              return '';
+            }
+          }
         }
+      },
+      onHover: function(event, activeElements) {
+        canvasElement.style.cursor = activeElements.length > 0 ? 'pointer' : 'default';
       }
     },
     plugins: [{
@@ -110,7 +125,9 @@ function loadPersonalCompass() {
 
   drawCompass(
     document.getElementById("personalChart"),
-    [{ x: ek, y: el, email: "personal" }]
+    [{ x: ek, y: el, email: "personal" }],
+    null,
+    false
   );
 }
 
@@ -124,16 +141,21 @@ async function loadGlobalCompass() {
   const emailIndex = header.indexOf("Email Address");
   const ekIndex = header.indexOf("EK");
   const elIndex = header.indexOf("EL");
+  const initialsIndex = header.indexOf("Initials");
+  const timestampIndex = header.indexOf("Timestamp");
 
   const points = rows.slice(1).filter(r => r[ekIndex] && r[elIndex]).map(r => ({
     x: parseFloat(r[ekIndex]),
     y: parseFloat(r[elIndex]),
-    email: r[emailIndex]
+    email: r[emailIndex],
+    initials: r[initialsIndex] || '',
+    timestamp: r[timestampIndex] || ''
   }));
 
   drawCompass(
     document.getElementById("globalChart"),
     points,
-    highlightEmail
+    highlightEmail,
+    true
   );
 }
