@@ -15,8 +15,8 @@ function getParam(name) {
 }
 
 // Draw a compass chart
-function drawCompass(ctx, points, highlight = null) {
-  new Chart(ctx, {
+function drawCompass(canvasElement, points, highlight = null) {
+  new Chart(canvasElement.getContext('2d'), {
     type: "scatter",
     data: {
       datasets: [
