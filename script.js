@@ -1,4 +1,4 @@
-// Your published Google Sheet URL (TSV format)
+// Your published Google Sheet URL (TSV format) – used for GLOBAL only
 const SHEET_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vRAwiKKguJiZmN6xzGMHuTVhOs0xGBXiicXRkQeFUrCA5gsczOvRM-cbLpIcfEI1EDY7dSNtmp82o2g/pub?output=tsv";
 
@@ -98,39 +98,25 @@ function drawCompass(canvasElement, points, highlight = null) {
   });
 }
 
-// PERSONAL COMPASS
-async function loadPersonalCompass() {
-  const email = getParam("email");
-  if (!email) {
-    alert("No email provided in URL. Use ?email=you@example.com");
+// PERSONAL COMPASS – now uses EK/EL passed from compass.html
+function loadPersonalCompass() {
+  const ek = window.personalEK;
+  const el = window.personalEL;
+
+  if (isNaN(ek) || isNaN(el)) {
+    alert("No EK/EL values found in the URL.");
     return;
   }
 
-  const rows = await fetchSheet();
-  const header = rows[0];
-
-  const emailIndex = header.indexOf("Email Address");
-  const ekIndex = header.indexOf("EK");
-  const elIndex = header.indexOf("EL");
-
-  const userRow = rows.find(r => r[emailIndex] === email);
-
-  if (!userRow) {
-    alert("Email not found in sheet.");
-    return;
-  }
-
-  const ek = parseFloat(userRow[ekIndex]);
-  const el = parseFloat(userRow[elIndex]);
-
-  drawCompass(document.getElementById("personalChart"), [
-    { x: ek, y: el, email }
-  ]);
+  drawCompass(
+    document.getElementById("personalChart"),
+    [{ x: ek, y: el, email: "personal" }]
+  );
 }
 
-// GLOBAL COMPASS
+// GLOBAL COMPASS – still uses the sheet
 async function loadGlobalCompass() {
-  const highlightEmail = getParam("email");
+  const highlightEmail = getParam("email"); // optional highlight
 
   const rows = await fetchSheet();
   const header = rows[0];
@@ -139,7 +125,7 @@ async function loadGlobalCompass() {
   const ekIndex = header.indexOf("EK");
   const elIndex = header.indexOf("EL");
 
-  const points = rows.slice(1).map(r => ({
+  const points = rows.slice(1).filter(r => r[ekIndex] && r[elIndex]).map(r => ({
     x: parseFloat(r[ekIndex]),
     y: parseFloat(r[elIndex]),
     email: r[emailIndex]
