@@ -49,14 +49,16 @@ body {
 .label-left {
   left: -80px;
   top: 50%;
-  transform: translateY(-50%) rotate(90deg);
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
   white-space: nowrap;
 }
 
 .label-right {
   right: -80px;
   top: 50%;
-  transform: translateY(-50%) rotate(90deg);
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
   white-space: nowrap;
 }
 
