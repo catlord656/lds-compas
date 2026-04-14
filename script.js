@@ -43,18 +43,16 @@ function drawCompass(canvasElement, points, highlight = null) {
             callback: function(value) { return value.toFixed(1); }
           },
           grid: {
-            color: '#cccccc',
             drawBorder: true,
-            lineWidth: function(context) {
-              return context.tick && context.tick.value === 0 ? 3 : 1;
-            },
             color: function(context) {
-              return context.tick && context.tick.value === 0 ? '#dddddd' : '#cccccc';
+              return context.tick && context.tick.value === 0 ? '#000000' : '#e0e0e0';
+            },
+            lineWidth: function(context) {
+              return context.tick && context.tick.value === 0 ? 2 : 1;
             }
           },
           border: {
-            color: '#000000',
-            width: 2
+            display: false
           },
           title: { display: true, text: "EK" }
         },
@@ -67,26 +65,36 @@ function drawCompass(canvasElement, points, highlight = null) {
             callback: function(value) { return value.toFixed(1); }
           },
           grid: {
-            color: '#cccccc',
             drawBorder: true,
-            lineWidth: function(context) {
-              return context.tick && context.tick.value === 0 ? 3 : 1;
-            },
             color: function(context) {
-              return context.tick && context.tick.value === 0 ? '#dddddd' : '#cccccc';
+              return context.tick && context.tick.value === 0 ? '#000000' : '#e0e0e0';
+            },
+            lineWidth: function(context) {
+              return context.tick && context.tick.value === 0 ? 2 : 1;
             }
           },
           border: {
-            color: '#000000',
-            width: 2
+            display: false
           },
           title: { display: true, text: "EL" }
         }
       },
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        filler: {
+          propagate: true
+        }
       }
-    }
+    },
+    plugins: [{
+      id: 'chartAreaBorder',
+      afterDatasetsDraw(chart) {
+        const {ctx, chartArea: {left, top, width, height}} = chart;
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(left, top, width, height);
+      }
+    }]
   });
 }
 
