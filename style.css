@@ -49,19 +49,22 @@ body {
 .label-left {
   left: -80px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotateZ(90deg);
   white-space: nowrap;
+  transform-origin: center;
 }
 
 .label-right {
   right: -80px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) rotateZ(90deg);
   white-space: nowrap;
+  transform-origin: center;
 }
 
 canvas {
   background: white;
   border: 2px solid #ccc;
   display: block;
+  filter: grayscale(100%);
 }
