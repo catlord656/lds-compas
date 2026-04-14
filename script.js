@@ -34,8 +34,20 @@ function drawCompass(canvasElement, points, highlight = null) {
     },
     options: {
       scales: {
-        x: { min: -1, max: 1, ticks: { stepSize: 0.20 }, title: { display: true, text: "EK" } },
-        y: { min: -1, max: 1, ticks: { stepSize: 0.20 }, title: { display: true, text: "EL" } }
+        x: {
+          type: 'linear',
+          min: -1,
+          max: 1,
+          ticks: { stepSize: 0.2 },
+          title: { display: true, text: "EK" }
+        },
+        y: {
+          type: 'linear',
+          min: -1,
+          max: 1,
+          ticks: { stepSize: 0.2 },
+          title: { display: true, text: "EL" }
+        }
       }
     }
   });
