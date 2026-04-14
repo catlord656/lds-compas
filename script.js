@@ -39,9 +39,7 @@ function drawCompass(ctx, points, highlight = null) {
           max: 1,
           ticks: {
             stepSize: 0.20,
-            callback: function(value) {
-              return value.toFixed(2);
-            }
+            callback: value => value.toFixed(2)
           },
           title: { display: true, text: "EK" }
         },
@@ -50,9 +48,7 @@ function drawCompass(ctx, points, highlight = null) {
           max: 1,
           ticks: {
             stepSize: 0.20,
-            callback: function(value) {
-              return value.toFixed(2);
-            }
+            callback: value => value.toFixed(2)
           },
           title: { display: true, text: "EL" }
         }
