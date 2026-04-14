@@ -38,14 +38,20 @@ function drawCompass(canvasElement, points, highlight = null) {
           type: 'linear',
           min: -1,
           max: 1,
-          ticks: { stepSize: 0.2 },
+          ticks: {
+            stepSize: 0.2,
+            callback: function(value) { return value.toFixed(1); }
+          },
           title: { display: true, text: "EK" }
         },
         y: {
           type: 'linear',
           min: -1,
           max: 1,
-          ticks: { stepSize: 0.2 },
+          ticks: {
+            stepSize: 0.2,
+            callback: function(value) { return value.toFixed(1); }
+          },
           title: { display: true, text: "EL" }
         }
       }
