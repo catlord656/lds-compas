@@ -42,6 +42,14 @@ function drawCompass(canvasElement, points, highlight = null) {
             stepSize: 0.2,
             callback: function(value) { return value.toFixed(1); }
           },
+          grid: {
+            color: '#cccccc',
+            drawBorder: true
+          },
+          border: {
+            color: '#000000',
+            width: 2
+          },
           title: { display: true, text: "EK" }
         },
         y: {
@@ -51,6 +59,14 @@ function drawCompass(canvasElement, points, highlight = null) {
           ticks: {
             stepSize: 0.2,
             callback: function(value) { return value.toFixed(1); }
+          },
+          grid: {
+            color: '#cccccc',
+            drawBorder: true
+          },
+          border: {
+            color: '#000000',
+            width: 2
           },
           title: { display: true, text: "EL" }
         }
