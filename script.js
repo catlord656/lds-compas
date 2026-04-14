@@ -16,7 +16,9 @@ function getParam(name) {
 
 // Draw a compass chart
 function drawCompass(canvasElement, points, highlight = null) {
-  new Chart(canvasElement.getContext('2d'), {
+  const ctx = canvasElement.getContext('2d');
+  
+  const chart = new Chart(ctx, {
     type: "scatter",
     data: {
       datasets: [
@@ -54,8 +56,38 @@ function drawCompass(canvasElement, points, highlight = null) {
           },
           title: { display: true, text: "EL" }
         }
+      },
+      plugins: {
+        legend: { display: false }
       }
-    }
+    },
+    plugins: [{
+      id: 'labels',
+      afterDatasetsDraw(chart) {
+        const { ctx, chartArea: { left, top, width, height } } = chart;
+        ctx.save();
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = 'black';
+        
+        // Justice (top center)
+        ctx.fillText('Justice', left + width / 2, top - 20);
+        
+        // Mercy (bottom center)
+        ctx.fillText('Mercy', left + width / 2, top + height + 20);
+        
+        // Orthodox (left center)
+        ctx.textAlign = 'right';
+        ctx.fillText('Orthodox', left - 20, top + height / 2);
+        
+        // Heterodox (right center)
+        ctx.textAlign = 'left';
+        ctx.fillText('Heterodox', left + width + 20, top + height / 2);
+        
+        ctx.restore();
+      }
+    }]
   });
 }
 
