@@ -18,10 +18,24 @@
   <canvas id="personalChart" width="500" height="500"></canvas>
 </div>
 
+<!-- Load your chart code -->
 <script src="script.js"></script>
+
+<!-- NEW: Read EK + EL from URL and pass to script.js -->
 <script>
+  // Read EK and EL from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const ek = parseFloat(urlParams.get("ek"));
+  const el = parseFloat(urlParams.get("el"));
+
+  // Make them available to script.js
+  window.personalEK = ek;
+  window.personalEL = el;
+
+  // Now load the chart
   loadPersonalCompass();
 </script>
 
 </body>
 </html>
+
