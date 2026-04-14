@@ -49,7 +49,7 @@ function drawCompass(canvasElement, points, highlight = null) {
               return context.tick && context.tick.value === 0 ? 3 : 1;
             },
             color: function(context) {
-              return context.tick && context.tick.value === 0 ? '#000000' : '#cccccc';
+              return context.tick && context.tick.value === 0 ? '#dddddd' : '#cccccc';
             }
           },
           border: {
@@ -73,7 +73,7 @@ function drawCompass(canvasElement, points, highlight = null) {
               return context.tick && context.tick.value === 0 ? 3 : 1;
             },
             color: function(context) {
-              return context.tick && context.tick.value === 0 ? '#000000' : '#cccccc';
+              return context.tick && context.tick.value === 0 ? '#dddddd' : '#cccccc';
             }
           },
           border: {
